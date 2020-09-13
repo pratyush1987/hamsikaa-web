@@ -1,0 +1,68 @@
+backend:
+  name: git-gateway
+  branch: master
+
+# This line should *not* be indented
+# publish_mode: editorial_workflow
+media_folder: "static/images"
+
+collections:
+  - name: "aparokshanubhuti" # Used in routes, e.g., /admin/collections/blog
+    label: "Aparokshanubhuti" # Used in the UI
+    folder: "content/prakarna-grantha/aparokshanubhuti" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document, usually in front matter
+      - { label: "Type", name: "type", widget: "hidden", default: "verse" }
+      - { label: "Link to audio", name: "verse_audio", widget: "string", default: "/audio/aparokshanubhuti/verseN.m4a" }
+      - {
+          label: "Navigation Levels",
+          name: "nav_levels",
+          widget: "hidden",
+          default: 1,
+        }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Topic of Verse", name: "subtitle", widget: "string" }
+      - { label: "Verse Number for Weight", name: "weight", widget: "number", value_type: "int", min: 1}
+      - label: "Verse Text"
+        name: "verse_text"
+        widget: "object"
+        fields:
+          - { label: "Devanagari", name: "dn", widget: "text" }
+      - { label: "Meaning", name: "meaning", widget: "text" }
+      - label: "Word by Word Meaning"
+        name: "word_by_word"
+        widget: "list"
+        fields:
+          - label: "Word"
+            name: "word"
+            widget: "object"
+            fields:
+              - { label: "Devanagari", name: "dn", widget: "string" }
+          - label: "Meaning"
+            name: "meaning"
+            widget: "string"
+      - label: "Commentaries"
+        name: "commentaries"
+        widget: "list"
+        fields:
+          - label: "Author"
+            name: "author"
+            widget: "select"
+            options: ["Swami Vimuktananda", "Jagadguru Vidyaranya"]
+          - label: "Language"
+            name: "language"
+            widget: "select"
+            options: ["En", "Hi", "Sa"]
+            default: "En"
+          - label: "Text"
+            name: "text"
+            widget: "text"
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        default: |
+          ## Reference Material
+          {{< expandable label="Video lectures" level="4" >}} 
+          {{< /expandable >}}
+          {{< expandable label="Notes" level="4" >}} 
+          {{< /expandable >}}
